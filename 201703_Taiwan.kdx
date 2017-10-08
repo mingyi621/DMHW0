@@ -1,0 +1,50 @@
+Layout {
+  FileType : "delimited"
+  Delimiter : ","
+  Latitude : "8"
+  Longitude : "9"
+  SkipRows : "1"
+  TextCodec : "US-ASCII"
+  FieldDefinitions {
+    0 {
+      Name : "Date"
+      Type : "string"
+    }
+    1 {
+      Name : "Time"
+      Type : "string"
+    }
+    2 {
+      Name : "device_id"
+      Type : "string"
+    }
+    3 {
+      Name : "PM2.5"
+      Type : "int"
+    }
+    4 {
+      Name : "PM10"
+      Type : "int"
+    }
+    5 {
+      Name : "PM1"
+      Type : "int"
+    }
+    6 {
+      Name : "Temperature"
+      Type : "double"
+    }
+    7 {
+      Name : "Humidity"
+      Type : "int"
+    }
+    8 {
+      Name : " lat"
+      Type : "double"
+    }
+    9 {
+      Name : " lon"
+      Type : "double"
+    }
+  }
+}
