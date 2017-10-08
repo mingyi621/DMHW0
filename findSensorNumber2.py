@@ -11,8 +11,6 @@ for row in csv.reader(f):
 	if row[2] not in sensor:
 		if float(row[8]) >= 21.5 and float(row[8]) <= 26.5 and float(row[9]) >= 118.0 and float(row[9]) <= 122.0:
 			sensor.append(row[2])
-#			print row[2] + " " + row[8] + " " + row[9]
-#			csv.writer(w).writerow(row)
 		else:
 			continue
 

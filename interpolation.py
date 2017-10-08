@@ -50,6 +50,9 @@ data5 = []
 sensor = ''
 location = []
 
+header = ['Date', 'Time', 'device_id', 'PM2.5', 'PM10', 'PM1', 'Temperature', 'Humidity', 'latitude', 'longitude']
+csv.writer(w).writerow(header)
+
 for row in csv.reader(f):
 	if sensor != '' and sensor != row[2]:
 		# do the interpolation

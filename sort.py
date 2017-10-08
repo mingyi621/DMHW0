@@ -1,3 +1,4 @@
+# Sort the data by sensors
 import csv
 import operator
 

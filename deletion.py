@@ -16,7 +16,7 @@ for row in csv.reader(f):
 		if row[2] not in sensor and row[2] not in unsensor:
 			sensor.append(row[2])
 
-print str(len(unsensor)) + "sensors have been removed."
+print str(len(unsensor)) + " sensors have been removed."
 print "Starting to remove data."
 
 g = open('output2.csv','r')
