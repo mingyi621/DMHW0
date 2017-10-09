@@ -2,6 +2,8 @@ import csv
 f = open('output3.csv','r')
 w = open('frequency.csv','w')
 
+print "Starting detecting the frequency."
+
 sensor = []
 count = 0
 r = []
@@ -37,3 +39,12 @@ for row in csv.reader(f):
 				min = count
 			ind = ind + 1
 			count = 0
+
+print "The last append:"
+r.append(str(count))
+if count < min:
+	min = count
+if min >=24 and len(r) == 32:
+	csv.writer(w).writerow(r)
+
+print "The frequency file has been outputed to frenquency.csv"
