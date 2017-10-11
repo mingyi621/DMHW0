@@ -10,7 +10,6 @@ for row in csv.reader(f):
 		if count == 1:
 			print sensor
 		count = 0
-		sensor = row[2]
 	else:
-		sensor = row[2]
 		count = count + 1
+	sensor = row[2]
