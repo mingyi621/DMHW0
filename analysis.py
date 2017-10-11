@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 from geopy.distance import vincenty
+import scipy.signal
+from scipy.signal import filtfilt, butter
 
 def reverseTimestamp(stamp):
 	second = stamp % 60
@@ -23,20 +25,46 @@ def offsetTranslation(data):
 	a = np.array(data)
 	mean = np.mean(a)
 
-	for element in data:
-		element = element - mean
+	data2 = []
+	e2 = 0
 
-	return data
+	for element in data:
+		e2 = element - mean
+		data2.append(e2)
+
+	return data2
 
 def amplitudeScaling(data):
 	a = np.array(data)
 	mean = np.mean(a)
 	std = np.std(a)
 
-	for e in data:
-		e = (e-mean)/std
+	data2 = []
+	e2 = 0
 
-	return data
+	for e in data:
+		e2 = (e-mean)/std
+		data2.append(e2)
+
+	return data2
+
+def euclideanDistance(data1,data2):
+	a = np.array(data1)
+	b = np.array(data2)
+	dist = np.linalg.norm(a - b)
+	return dist
+
+def denoise(data):
+#	n = 3
+#	b = [1.0/n]*n
+#	a = 1
+#	data2 = lfilter(b,a,data)
+
+	b, a = butter(3, 0.5)
+	data2 = filtfilt(b, a, data)
+
+
+	return data2
 
 r = open('output5.csv', 'r')
 
@@ -82,7 +110,11 @@ for row in csv.reader(r):
 		location[0] = row[8]
 		location[1] = row[9]
 
-plt.plot(time,pm2_5_1)
+#pm2_5_1 = offsetTranslation(pm2_5_1)
+#pm2_5_1 = amplitudeScaling(pm2_5_1)
+#pm2_5_1 = scipy.signal.detrend(pm2_5_1)
+#pm2_5_1 = denoise(pm2_5_1)
+#plt.plot(time,pm2_5_1)
 
 nearest = []
 
@@ -109,6 +141,62 @@ for row in csv.reader(r):
 		else:
 			pm2_5_2.append(float(row[3]))
 
-plt.plot(time,pm2_5_2)
+#pm2_5_2 = offsetTranslation(pm2_5_2)
+#pm2_5_2 = amplitudeScaling(pm2_5_2)
+#pm2_5_2 = scipy.signal.detrend(pm2_5_2)
+#pm2_5_2 = denoise(pm2_5_2)
+#plt.plot(time,pm2_5_2)
 
+# The output steps:
+
+# origin figure:
+plt.plot(time,pm2_5_1)
+plt.plot(time,pm2_5_2)
+print "Origin figure:"
+print "Eu distance = " + str(euclideanDistance(pm2_5_1,pm2_5_2))
 plt.show()
+plt.gcf().clear()
+
+# 1st step: offset translation
+pm2_5_1 = offsetTranslation(pm2_5_1)
+pm2_5_2 = offsetTranslation(pm2_5_2)
+plt.plot(time,pm2_5_1)
+plt.plot(time,pm2_5_2)
+print "After offset translation:"
+print "Eu distance = " + str(euclideanDistance(pm2_5_1,pm2_5_2))
+plt.show()
+plt.gcf().clear()
+
+# 2nd step: amplitude scaling
+pm2_5_1 = amplitudeScaling(pm2_5_1)
+pm2_5_2 = amplitudeScaling(pm2_5_2)
+plt.plot(time,pm2_5_1)
+plt.plot(time,pm2_5_2)
+print "After amplitude scaling:"
+print "Eu distance = " + str(euclideanDistance(pm2_5_1,pm2_5_2))
+plt.show()
+plt.gcf().clear()
+
+# 3rd step: detrend
+pm2_5_1 = scipy.signal.detrend(pm2_5_1)
+pm2_5_2 = scipy.signal.detrend(pm2_5_2)
+plt.plot(time,pm2_5_1)
+plt.plot(time,pm2_5_2)
+print "After detrend:"
+print "Eu distance = " + str(euclideanDistance(pm2_5_1,pm2_5_2))
+plt.show()
+plt.gcf().clear()
+
+# 4th step: denoise
+pm2_5_1 = denoise(pm2_5_1)
+pm2_5_2 = denoise(pm2_5_2)
+plt.plot(time,pm2_5_1)
+plt.plot(time,pm2_5_2)
+print "After denoise:"
+print "Eu distance = " + str(euclideanDistance(pm2_5_1,pm2_5_2))
+plt.show()
+plt.gcf().clear()
+
+
+
+
