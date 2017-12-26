@@ -32,3 +32,19 @@ There are five main files in this homework.
 3. SpatialPM2.5.py: Using DBSCAN
 4. TemporalPM2.5.py: Using K-Means
 5. TemporalTemperature.py: Using Agglomerative Clustering
+
+For homework 3
+----------------
+This homework is for predicting.
+
+Preprocessing
+1. mix3months.py: Mix the data from 3 months into one file.
+2. selectTheSensor.py: Randomly select one good sensor.
+3. oneSensorInterpolation.py: Interpolate the data.
+
+classification
+1. classification.py
+2. classification2.py
+
+regression
+1. regression.py
