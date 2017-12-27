@@ -82,8 +82,8 @@ for element in training:
 	Y.append(element[1])
 
 # Split the data
-X_training, X_test = split(X, 0.2)
-Y_training, Y_test = split(Y, 0.2)
+X_training, X_test = split(X, 0.7)
+Y_training, Y_test = split(Y, 0.7)
 
 # Using KNN classifier
 from sklearn.neighbors import KNeighborsClassifier
